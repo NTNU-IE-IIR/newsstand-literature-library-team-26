@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class ApplicationUI 
 {
 
-   
+    private Register register;
     // The menu tha will be displayed. Please edit/alter the menu
     // to fit your application (i.e. replace "prodct" with "litterature"
     // etc.
@@ -28,6 +28,7 @@ public class ApplicationUI
      */
     public ApplicationUI() 
     {
+        this.register = new Register();
     }
 
     /**
@@ -69,7 +70,8 @@ public class ApplicationUI
             } 
             catch (InputMismatchException ime) 
             {
-                System.out.println("\nERROR: Please provide a number between 1 and " + this.menuItems.length + "..\n");
+                System.out.println("\nERROR: Please provide a number between 1 and " 
+                        + this.menuItems.length + "..\n");
             }
         }        
         
@@ -121,9 +123,11 @@ public class ApplicationUI
     /**
      * Lists all the products/literature in the register
      */
-    void listAllProducts()
+    private void listAllProducts()
     {
         System.out.println("listAllProducts() was called");
+        
+        this.register.printOutAllBookTitles();
     }
 
     
@@ -137,9 +141,27 @@ public class ApplicationUI
      * Remember to also handle invalid input from the
      * user!!
      */
-    void addNewProduct()
+    private void addNewProduct()
     {
-        System.out.println("addNewProduct() was called");
+        Scanner newBook = new Scanner(System.in);
+        System.out.println("Enter books name: "); 
+        String name = newBook.next();
+        
+        System.out.println("Enter authors name: ");
+        String author = newBook.next();
+        
+        System.out.println("Enter publisher name: ");
+        String publisher = newBook.next();
+        
+        System.out.println("Enter date published: ");
+        String published = newBook.next();
+        
+        System.out.println("Enter edition: ");
+        int edition = newBook.nextInt();
+        
+        Book book = new Book(name,author,publisher,published,edition);
+        this.register.addBookToCollection(book);
+        System.out.println("New book " + name + " was added to collection.");
         
     }
 
@@ -152,7 +174,7 @@ public class ApplicationUI
      * Then, upon return from the register, you need
      * to print the details of the found item.
      */
-    void findProductByName()
+    private void findProductByName()
     {
         System.out.println("findProductByName() was called");
     }
