@@ -3,7 +3,7 @@ import java.util.Iterator;
 /**
  * Register class, controles collections of books, 
  * magazines and newspapers.
- * @author Gruppe 26
+ * @author Gruppe 26 consists of: Sigurdur, Sigurd, Erik.
  * @version 2019-02-06
  */
 public class Register
