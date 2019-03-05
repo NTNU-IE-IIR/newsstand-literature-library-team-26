@@ -3,7 +3,7 @@ import java.util.Iterator;
 /**
  * Register class, controles collections of books, 
  * magazines and newspapers.
- * @author Gruppe 26 consists of: Sigurdur, Sigurd, Erik.
+ * @author Gruppe 26
  * @version 2019-02-06
  */
 public class Register
@@ -37,6 +37,22 @@ public class Register
     }
     
     /**
+     * if collection is empty return true
+     * else if collection has item/s return false
+     * @return size of book collection 
+     */
+    public boolean isCollectionEmpty()
+    {
+        boolean empty = true;
+        if(this.books.size() > 0)
+        {
+            empty = false;
+        }
+        
+        return empty;
+    }
+    
+    /**
      * Prints out all book titles from the book collection
      */
     public void printOutAllBookTitles()
@@ -51,17 +67,17 @@ public class Register
      * searches for title and checks if it exists in out database
      * @param title Title to search for 
      */
-    public void searchBook(String title)
+    public Book searchBook(String title)
     {
+        Book b = null;
         for(Book book: this.books)
         {
             if(book.getTitle().equalsIgnoreCase(title))
             {
-                System.out.println("The book " + book.getTitle() 
-                + " was found in our database");
-            }
+                b = book;
+            } 
         }
-
+        return b;
     }
     
     

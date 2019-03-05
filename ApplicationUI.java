@@ -125,9 +125,12 @@ public class ApplicationUI
      */
     private void listAllProducts()
     {
-        System.out.println("listAllProducts() was called");
-        
-        this.register.printOutAllBookTitles();
+        if(!this.register.isCollectionEmpty())
+        {
+            this.register.printOutAllBookTitles();
+        } else {
+            System.out.println("There are no books in the collection");
+        }
     }
 
     
@@ -144,23 +147,26 @@ public class ApplicationUI
     private void addNewProduct()
     {
         Scanner newBook = new Scanner(System.in);
+        
         System.out.println("Enter books name: "); 
-        String name = newBook.next();
+        String name = newBook.nextLine();
         
         System.out.println("Enter authors name: ");
-        String author = newBook.next();
+        String author = newBook.nextLine();
         
         System.out.println("Enter publisher name: ");
-        String publisher = newBook.next();
+        String publisher = newBook.nextLine();
         
         System.out.println("Enter date published: ");
-        String published = newBook.next();
+        String published = newBook.nextLine();
         
         System.out.println("Enter edition: ");
         int edition = newBook.nextInt();
         
         Book book = new Book(name,author,publisher,published,edition);
+        
         this.register.addBookToCollection(book);
+        
         System.out.println("New book " + name + " was added to collection.");
         
     }
@@ -176,7 +182,24 @@ public class ApplicationUI
      */
     private void findProductByName()
     {
-        System.out.println("findProductByName() was called");
+        System.out.print("Enter title of book: ");
+        Scanner sc = new Scanner(System.in);
+        String title = sc.nextLine();
+        
+        
+        Book book = this.register.searchBook(title);
+        if(book != null)
+        {
+            System.out.println("**********************");
+            System.out.println("Title: \t\t" + book.getTitle());
+            System.out.println("Author: \t" + book.getAuthor());
+            System.out.println("Publisher: \t" + book.getPublisher());
+            System.out.println("Published: \t" + book.getDatePublished());
+            System.out.println("Edition: \t" + book.getEdition());
+            System.out.println("*********************");
+            System.out.println("");
+        }
+        
     }
     
 }
