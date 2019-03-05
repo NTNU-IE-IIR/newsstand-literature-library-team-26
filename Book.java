@@ -79,6 +79,6 @@ public class Book
     public int getEdition()
     {
         return this.edition;
-    }
+    }   
     
 } // END OF CLASS Book 
