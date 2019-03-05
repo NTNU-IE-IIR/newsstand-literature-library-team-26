@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 /**
- * Register class, controles collections of books, 
+ * Register class, controls collections of books, 
  * magazines and newspapers.
  * @author Gruppe 26
  * @version 2019-02-06
@@ -22,9 +22,15 @@ public class Register
      * Adds a book to the book collection.
      * @param book Book to add to collection
      */
-    public void addBookToCollection(Book book)
+    public boolean addBookToCollection(Book book)
     {
-        this.books.add(book);
+        boolean bookAdded = false;
+        if(book.getEdition() > 0)
+        {
+            this.books.add(book);
+            bookAdded = true;
+        }    
+        return bookAdded;
     }
     
     /**
@@ -60,14 +66,12 @@ public class Register
     /**
      * Prints out all book titles from the book collection
      */
-    public String printOutAllBookTitles()
+    public void printOutAllBookTitles()
     {
-        String title = null;
         for(Book book: this.books)
         {
-            title = book.getTitle();
+            System.out.println("Book title:\t" + book.getTitle());
         }
-        return title;
     }
     
     /**

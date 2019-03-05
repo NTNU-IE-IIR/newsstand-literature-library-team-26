@@ -17,8 +17,5 @@ public class Main
         ApplicationUI appUI = new ApplicationUI();
         appUI.start();
         
-        //Book book = new Book("Siggi","Hallur","Jonsson","today",1);
-        
-        //System.out.println();
     }
 }
