@@ -52,15 +52,22 @@ public class Register
         return empty;
     }
     
+    public int getSizeOfCollection()
+    {
+        return this.books.size();
+    }
+    
     /**
      * Prints out all book titles from the book collection
      */
-    public void printOutAllBookTitles()
+    public String printOutAllBookTitles()
     {
+        String title = null;
         for(Book book: this.books)
         {
-            System.out.println(book.getTitle());
+            title = book.getTitle();
         }
+        return title;
     }
     
     /**
@@ -69,15 +76,15 @@ public class Register
      */
     public Book searchBook(String title)
     {
-        Book b = null;
+        Book bookToBeFound = null;
         for(Book book: this.books)
         {
             if(book.getTitle().equalsIgnoreCase(title))
             {
-                b = book;
+                bookToBeFound = book;
             } 
         }
-        return b;
+        return bookToBeFound;
     }
     
     
