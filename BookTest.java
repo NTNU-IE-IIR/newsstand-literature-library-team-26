@@ -22,7 +22,7 @@ public class BookTest {
     @Before
     public void setUp()
     {
-
+        
     }
     
     /**
@@ -70,4 +70,14 @@ public class BookTest {
         assertEquals(1, result);
     }
     
+    /**
+     * Test the edition function if it gets negative integer
+     */
+    @Test
+    public void testNegativeEdition()
+    {
+        Book instance = new Book("The chase", "The Rock", "Enviro", "2018-02-07",-1);
+        int result = instance.getEdition();
+        assertEquals(0, result);
+    }
 }

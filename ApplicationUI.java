@@ -18,9 +18,9 @@ public class ApplicationUI
     // to fit your application (i.e. replace "prodct" with "litterature"
     // etc.
     private String[] menuItems = {
-        "1. List all products",
-        "2. Add new product",
-        "3. Find a product by name",
+        "1. List all books",
+        "2. Add new book",
+        "3. Find a book by title",
     };
 
     /**
@@ -101,6 +101,7 @@ public class ApplicationUI
         // Read input from user
         Scanner reader = new Scanner(System.in);
         int menuSelection = reader.nextInt();
+        
         if ((menuSelection < 1) || (menuSelection > maxMenuItemNumber)) 
         {
             throw new InputMismatchException();
@@ -117,7 +118,8 @@ public class ApplicationUI
      */
     private void init()
     {
-        System.out.println("init() was called");
+        System.out.println("The Book store is open");
+        loadBooksFromDatabase();
     }
 
     /**
@@ -127,9 +129,12 @@ public class ApplicationUI
     {
         if(!this.register.isCollectionEmpty())
         {
+            System.out.println( "\nBooks available:" );
             this.register.printOutAllBookTitles();
+            System.out.println( "" );
         } else {
-            System.out.println("There are no books in the collection");
+            System.out.println("There are no books in the collection\n\n");
+            
         }
     }
 
@@ -146,31 +151,44 @@ public class ApplicationUI
      */
     private void addNewProduct()
     {
+        Book book = newBook();
+        
+        boolean bookAdded = this.register.addBookToCollection(book);
+        if(bookAdded)
+        {
+            System.out.println("New book \"" + book.getTitle() + "\" was added to collection.");
+        }
+        else {
+            System.out.println( "Someting must have gone wrong.\n"
+                    + "Maybe you used invalid edition number.\n"
+                    + "Edition must be number higher then zero." );
+        }
+    }
+    
+    private Book newBook()
+    {
         Scanner newBook = new Scanner(System.in);
         
-        System.out.println("Enter books name: "); 
+        System.out.print("Enter books name: "); 
         String name = newBook.nextLine();
         
-        System.out.println("Enter authors name: ");
+        System.out.print("Enter authors name: ");
         String author = newBook.nextLine();
         
-        System.out.println("Enter publisher name: ");
+        System.out.print("Enter publisher name: ");
         String publisher = newBook.nextLine();
         
-        System.out.println("Enter date published: ");
+        System.out.print("Enter date published: ");
         String published = newBook.nextLine();
         
-        System.out.println("Enter edition: ");
+        System.out.print("Enter edition: ");
         int edition = newBook.nextInt();
         
         Book book = new Book(name,author,publisher,published,edition);
         
-        this.register.addBookToCollection(book);
-        
-        System.out.println("New book " + name + " was added to collection.");
-        
+        return book;
     }
-
+    
     /**
      * Find and display a product based om name (title).
      * As with the addNewProduct()-method, you have to
@@ -186,20 +204,51 @@ public class ApplicationUI
         Scanner sc = new Scanner(System.in);
         String title = sc.nextLine();
         
-        
         Book book = this.register.searchBook(title);
         if(book != null)
         {
-            System.out.println("**********************");
-            System.out.println("Title: \t\t" + book.getTitle());
-            System.out.println("Author: \t" + book.getAuthor());
-            System.out.println("Publisher: \t" + book.getPublisher());
-            System.out.println("Published: \t" + book.getDatePublished());
-            System.out.println("Edition: \t" + book.getEdition());
-            System.out.println("*********************");
-            System.out.println("");
+            printBooksInfo(book);
+        }
+        else {
+            System.out.println( "Book not found! "
+                    + "Make sure you spell the title correctly." );
         }
         
+    }
+    
+    
+    /**
+     * generates dummie books and adds them to the collection
+     */
+    private void loadBooksFromDatabase()
+    {
+        Book dummie1 =  new Book("In the river","Cardi B","Vaka","2017",5);
+        Book dummie2 =  new Book("Elevent hour","Lil Wayne","Vaka","2017",5);
+        Book dummie3 =  new Book("Mistic mountain","Jay C","Vaka","2017",5);
+        Book dummie4 =  new Book("Smell of the flowers","Nicki Minaj","Vaka","2017",5);
+        Book dummie5 =  new Book("Go with the flow","Snoope Dog","Vaka","2017",5);
+        
+        this.register.addBookToCollection( dummie1 );
+        this.register.addBookToCollection( dummie2 );
+        this.register.addBookToCollection( dummie3 );
+        this.register.addBookToCollection( dummie4 );
+        this.register.addBookToCollection( dummie5 );
+    }
+    
+    /**
+     * prints out all information about book
+     * @param book to print out info about
+     */
+    private void printBooksInfo(Book book)
+    {
+        System.out.println("**********************");
+        System.out.println("Title: \t\t" + book.getTitle());
+        System.out.println("Author: \t" + book.getAuthor());
+        System.out.println("Publisher: \t" + book.getPublisher());
+        System.out.println("Published: \t" + book.getDatePublished());
+        System.out.println("Edition: \t" + book.getEdition());
+        System.out.println("*********************");
+        System.out.println("");
     }
     
 }

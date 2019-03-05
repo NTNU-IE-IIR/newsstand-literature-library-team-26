@@ -64,23 +64,4 @@ public class RegisterTest {
         assertEquals(true, empty);
     }
 
-    /**
-     * Test of printOutAllBookTitles method, of class Register.
-     */
-    @Test
-    public void testPrintOutAllBookTitles() {
-        register.addBookToCollection(b1);
-        String str = register.printOutAllBookTitles();
-        assertEquals("Siggi", str);
-     
-    }
-
-    /**
-     * Test of searchBook method, of class Register.
-     */
-    @Test
-    public void testSearchBook() {
-        
-    }
-    
 }
