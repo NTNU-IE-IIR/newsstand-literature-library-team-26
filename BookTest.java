@@ -1,14 +1,11 @@
-/*
- * @author: Sigurdur Hallur Jonsson
- */
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
- *
- * @author siggi
+ * @author: Gruppe 26 (Sigurdur Hallur, Sigurd og Erik)
+ * @version 0.1
  */
 public class BookTest {
     
