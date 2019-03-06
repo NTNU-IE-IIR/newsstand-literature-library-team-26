@@ -41,7 +41,8 @@ public class RegisterTest {
         assertEquals(false, empty);
         assertEquals(1,num);
     }
-
+    
+    
     /**
      * Test of removeBookToCollection method, of class Register.
      */
@@ -62,6 +63,16 @@ public class RegisterTest {
     public void testIsCollectionEmpty() {
         boolean empty = register.isCollectionEmpty();
         assertEquals(true, empty);
+    }
+    
+    /**
+     * Test if isCollectionEmpty when there is item in collection.
+     */
+    @Test
+    public void testIsNotCollectionEmpty() {
+        register.addBookToCollection(b1);
+        boolean empty = register.isCollectionEmpty();
+        assertEquals(false, empty);
     }
 
 }
