@@ -1,21 +1,17 @@
+/*
+ * @author: Sigurdur Hallur Jonsson
+ */
+package kiosk;
 
 /**
- * The Main-class of the application. This class only holds the main()-method
- * to start the application.
- * 
- * @author asty
- * @version 1.0
+ *
+ * @author siggi
  */
 public class Main 
 {
-    /**
-     * The main entry for the application.
-     * @param args arguments provided during startup of the application
-     */
-    public static void main(String[] args)
+    public static void main(String[] args) 
     {
-        ApplicationUI appUI = new ApplicationUI();
-        appUI.start();
-        
+        KioskUI kui = new KioskUI();
+        kui.start();
     }
 }

@@ -1,95 +1,67 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-/**
- * Register class, controls collections of books, 
- * magazines and newspapers.
- * @author Gruppe 26
- * @version 2019-02-06
+/*
+ * @author: Sigurdur Hallur Jonsson
  */
-public class Register
+package kiosk;
+
+import java.util.HashMap;
+import java.util.Iterator;
+
+/**
+ *
+ * @author siggi
+ */
+public class Register implements RegisterInterface, SearchInterface
 {
-    private ArrayList<Book> books;
+    private HashMap<String, ReadingMaterial> readingMaterial;
     
-    /**
-     * Constructor to register, initializes a collection of books
-     */
     public Register()
     {
-        this.books = new ArrayList<Book>();
+        this.readingMaterial = new HashMap<>();
     }
     
-    /**
-     * Adds a book to the book collection.
-     * @param book Book to add to collection
-     */
-    public boolean addBookToCollection(Book book)
+    @Override
+    public void addToCollection(ReadingMaterial readingMaterial)
     {
-        boolean bookAdded = false;
-        if(book.getEdition() > 0)
-        {
-            this.books.add(book);
-            bookAdded = true;
-        }    
-        return bookAdded;
+        this.readingMaterial.put(readingMaterial.getTitle(), readingMaterial);
     }
     
-    /**
-     * Removes a book from the book collection.
-     * @param book Book to remove from collection
-     */
-    public void removeBookToCollection(Book book)
+    @Override
+    public void removeFromCollection(ReadingMaterial readingMaterial)
     {
-        this.books.remove(book);
+        this.readingMaterial.remove(readingMaterial);
     }
     
-    /**
-     * if collection is empty return true
-     * else if collection has item/s return false
-     * @return size of book collection 
-     */
     public boolean isCollectionEmpty()
     {
         boolean empty = true;
-        if(this.books.size() > 0)
+        if(this.readingMaterial.size() > 0)
         {
             empty = false;
         }
-        
         return empty;
     }
     
-    public int getSizeOfCollection()
+    @Override
+    public void printOutAllTitles()
     {
-        return this.books.size();
-    }
-    
-    /**
-     * Prints out all book titles from the book collection
-     */
-    public void printOutAllBookTitles()
-    {
-        for(Book book: this.books)
+        Iterator<ReadingMaterial> it = this.readingMaterial.values().iterator();
+        while(it.hasNext())
         {
-            System.out.println("Book title:\t" + book.getTitle());
+            ReadingMaterial rm = it.next();
+            System.out.println(rm.getTitle());
         }
-    }
-    
-    /**
-     * searches for title and checks if it exists in out database
-     * @param title Title to search for 
-     */
-    public Book searchBook(String title)
-    {
-        Book bookToBeFound = null;
-        for(Book book: this.books)
-        {
-            if(book.getTitle().equalsIgnoreCase(title))
-            {
-                bookToBeFound = book;
-            } 
-        }
-        return bookToBeFound;
     }
 
+    @Override
+    public ReadingMaterial searchMaterial(String title) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
-}
+    @Override
+    public void searchByName(String title)
+    {
+        
+    }
+    
+} // END OF CLASS
+
