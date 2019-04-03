@@ -3,6 +3,7 @@
  */
 package kiosk;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -11,15 +12,15 @@ import java.util.Iterator;
  */
 public class Register implements RegisterInterface
 {
-    private HashMap<String, ReadingMaterial> readingMaterial;
-    private HashMap<String, ReadingMaterial> materialFound;
+    private ArrayList<ReadingMaterial> readingMaterial;
+    private ArrayList<ReadingMaterial> materialFound;
     
     /**
      * Constructor, makes map for Reading Material
      */
     public Register()
     {
-        this.readingMaterial = new HashMap<>();
+        this.readingMaterial = new ArrayList<>();
     }
     
     @Override
@@ -29,7 +30,7 @@ public class Register implements RegisterInterface
      */
     public void addToCollection(ReadingMaterial readingMaterial)
     {
-        this.readingMaterial.put(readingMaterial.getTitle(), readingMaterial);
+        this.readingMaterial.add(readingMaterial);
     }
     
     @Override
@@ -63,7 +64,7 @@ public class Register implements RegisterInterface
      */
     public void printOutAllTitles()
     {
-        Iterator<ReadingMaterial> it = this.readingMaterial.values().iterator();
+        Iterator<ReadingMaterial> it = this.readingMaterial.iterator();
         while(it.hasNext())
         {
             ReadingMaterial rm = it.next();
@@ -78,7 +79,7 @@ public class Register implements RegisterInterface
      */
     public ReadingMaterial searchMaterial(String title) 
     {
-        this.materialFound = new HashMap<>();
+        this.materialFound = new ArrayList<>();
         ReadingMaterial rm = null;
         
         
@@ -86,18 +87,18 @@ public class Register implements RegisterInterface
         return rm;
     }
     
-    public HashMap<String, ReadingMaterial> findMaterial(String title)
+    public ArrayList<ReadingMaterial> findMaterial(String title)
     {
-        this.materialFound = new HashMap<>();
+        this.materialFound = new ArrayList<>();
         
-        Iterator<ReadingMaterial> it = this.readingMaterial.values().iterator();
+        Iterator<ReadingMaterial> it = this.readingMaterial.iterator();
         
         while(it.hasNext())
         {
             ReadingMaterial rm = it.next();
             if(rm.getTitle().equals(title))
             {
-                this.materialFound.put(rm.getTitle(), rm);
+                this.materialFound.add(rm);
             }
         }
         

@@ -2,6 +2,7 @@
  * @author: Sigurdur Hallur Jonsson
  */
 package kiosk;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Iterator;
@@ -299,7 +300,7 @@ private Register register;
         Scanner sc = new Scanner(System.in);
         String title = sc.nextLine();
         
-        HashMap<String, ReadingMaterial> materialFound = 
+        ArrayList<ReadingMaterial> materialFound = 
                 this.register.findMaterial(title);
         if(materialFound != null)
         {
@@ -325,21 +326,61 @@ private Register register;
         this.register.addToCollection(rm4);
     }
     
-    private void printReadingMaterialInfo(HashMap materialFound)
+    private void printReadingMaterialInfo(ArrayList materialFound)
     {
-        Iterator<ReadingMaterial> it = materialFound.values().iterator();
+        Iterator<ReadingMaterial> it = materialFound.iterator();
         
         while(it.hasNext())
         {
             ReadingMaterial rm = it.next();
-            System.out.println("Reading stuff found");
-            System.out.println(rm.getTitle());
-            System.out.println(rm.getPublisher());
-            System.out.println("****");
+            if(rm instanceof Book)
+            {   
+                Book book = (Book) rm;
+                printBookInfo(book);
+            }
+            else if (rm instanceof Magazine)
+            {
+                Magazine magazine = (Magazine) rm;
+                printMagazineInfo(magazine);
+                
+            }
+            else if (rm instanceof Newspaper)
+            {
+                Newspaper newspaper = (Newspaper) rm;
+                printNewspaperInfo(newspaper);
+            }
             
-        }
+            
+        } // end of while
+    } // end of printReadingMaterial
+    
+    private void printBookInfo(Book book)
+    {
+        System.out.println("Title:\t\t"      + book.getTitle());
+        System.out.println("Publisher:\t"    + book.getPublisher());
+        System.out.println("Published:\t"    + book.getPublished());
+        System.out.println("Author:\t\t"     + book.getAuthor());
+        System.out.println("Edition:\t\t"    + book.getEdition());
+        System.out.println("");
     }
     
+    private void printMagazineInfo(Magazine magazine)
+    {
+        System.out.println("Title:\t\t"      + magazine.getTitle());
+        System.out.println("Publisher:\t"    + magazine.getPublisher());
+        System.out.println("Published:\t"    + magazine.getPublished());
+        System.out.println("Issue:\t\t"      + magazine.getIssue());
+        System.out.println("");
+    }
+    
+    private void printNewspaperInfo(Newspaper newspaper)
+    {
+        System.out.println("Title:\t\t"      + newspaper.getTitle());
+        System.out.println("Publisher:\t"    + newspaper.getPublisher());
+        System.out.println("Published:\t"    + newspaper.getPublished());
+        System.out.println("Issue:\t\t"      + newspaper.getIssue());
+        System.out.println("");
+    }
     
 
 }
