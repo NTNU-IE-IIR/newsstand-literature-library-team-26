@@ -19,6 +19,7 @@ public abstract class Literature extends ReadingMaterial
         {
             this.author = "";
         }
+        
         this.author = author;
         validateEdition(edition);
     }

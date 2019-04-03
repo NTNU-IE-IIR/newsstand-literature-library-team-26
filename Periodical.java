@@ -14,12 +14,7 @@ public abstract class Periodical extends ReadingMaterial
     public Periodical(String title, String publisher, String published, int issue)
     {
         super(title, publisher, published);
-        if(issue < 0)
-        {
-            // throw exception
-            this.issue = 0;
-        }
-        this.issue = issue;
+        validateIssue(issue);
     }
     
     public int getIssue()
@@ -27,4 +22,15 @@ public abstract class Periodical extends ReadingMaterial
         return this.issue;
     }
     
+    private boolean validateIssue(int issue)
+    {
+        boolean validateIssue = true;
+        this.issue = issue;
+        if(issue < 0)
+        {
+            validateIssue = false;
+            this.issue = 0;
+        }
+        return validateIssue;
+    }
 }

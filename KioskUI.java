@@ -2,7 +2,9 @@
  * @author: Sigurdur Hallur Jonsson
  */
 package kiosk;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 /**
  *
@@ -15,9 +17,15 @@ private Register register;
     // to fit your application (i.e. replace "prodct" with "litterature"
     // etc.
     private String[] menuItems = {
-        "1. List all books",
-        "2. Add new book",
-        "3. Find a book by title",
+        "1. List all reading material",
+        "2. Add new reading material",
+        "3. Find reading material by title",
+    };
+    
+    private String[] readingMaterialItems = {
+      "1. Add new book",
+        "2. Add new magazine",
+        "3. Add new newspaper"
     };
 
     /**
@@ -126,11 +134,11 @@ private Register register;
     {
         if(!this.register.isCollectionEmpty())
         {
-            System.out.println( "\nBooks available:" );
+            System.out.println( "\nReading material available:" );
             this.register.printOutAllTitles();
             System.out.println( "" );
         } else {
-            System.out.println("There are no books in the collection\n\n");
+            System.out.println("There are no reading material in the collection\n\n");
             
         }
     }
@@ -148,7 +156,63 @@ private Register register;
      */
     private void addNewProduct()
     {
-        System.out.println("Add new product");
+        boolean quit = false;
+        
+        while(!quit)
+        {
+            try
+            {
+                int selectReadingMaterial = this.showReadingMaterialMenu();
+                
+                switch(selectReadingMaterial)
+                {
+                    case 1:
+                        ReadingMaterial book = this.newBook();
+                        this.register.addToCollection(book);
+                        break;
+                    case 2:
+                        ReadingMaterial magazine = this.newMagazine();
+                        this.register.addToCollection(magazine);
+                        break;
+                    case 3:
+                        ReadingMaterial newspaper = this.newNewsPaper();
+                        this.register.addToCollection(newspaper);
+                        break;
+                    case 4:
+                        quit = true;
+                        break;
+                    default:
+                }
+            } 
+            catch(InputMismatchException ime)
+            {
+                System.out.println("\nERROR: Please provide a number between 1 and " 
+                        + this.menuItems.length + "..\n");
+            }
+        }
+    }
+    
+    private int showReadingMaterialMenu() throws InputMismatchException
+    {
+        System.out.println("\n*** Add Reading Material ***\n");
+        // Display the menu
+        for ( String menuItem : readingMaterialItems )
+        {
+            System.out.println(menuItem);
+        }
+        int maxMenuItemNumber = readingMaterialItems.length + 1;
+        // Add the "Exit"-choice to the menu
+        System.out.println(maxMenuItemNumber + ". Exit\n");
+        System.out.println("Please choose menu item (1-" + maxMenuItemNumber + "): ");
+        // Read input from user
+        Scanner reader = new Scanner(System.in);
+        int menuSelection = reader.nextInt();
+        
+        if ((menuSelection < 1) || (menuSelection > maxMenuItemNumber)) 
+        {
+            throw new InputMismatchException();
+        }
+        return menuSelection;
     }
     
     private Book newBook()
@@ -170,9 +234,54 @@ private Register register;
         System.out.print("Enter edition: ");
         int edition = newBook.nextInt();
         
-        Book book = new Book(name,author,publisher,published,edition);
+        ReadingMaterial book = 
+                new Book(name,publisher,published,author,edition);
         
-        return book;
+        return (Book) book;
+    }
+    
+    private Magazine newMagazine()
+    {
+        Scanner newMagazine = new Scanner(System.in);
+        
+        System.out.print("Enter Magazine name: "); 
+        String title = newMagazine.nextLine();
+        
+        System.out.print("Enter publisher name: ");
+        String publisher = newMagazine.nextLine();
+        
+        System.out.print("Enter date published: ");
+        String published = newMagazine.nextLine();
+        
+        System.out.print("Enter issue: ");
+        int issue = newMagazine.nextInt();
+        
+        ReadingMaterial magazine = 
+                new Magazine(title,publisher,published,issue);
+        
+        return (Magazine) magazine;
+    }
+    
+    private Newspaper newNewsPaper()
+    {
+        Scanner newNewspaper = new Scanner(System.in);
+        
+        System.out.print("Enter Newspaper name: "); 
+        String title = newNewspaper.nextLine();
+        
+        System.out.print("Enter publisher name: ");
+        String publisher = newNewspaper.nextLine();
+        
+        System.out.print("Enter date published: ");
+        String published = newNewspaper.nextLine();
+        
+        System.out.print("Enter issue: ");
+        int issue = newNewspaper.nextInt();
+        
+        ReadingMaterial newspaper = 
+                new Newspaper(title,publisher,published,issue);
+        
+        return (Newspaper) newspaper;
     }
     
     /**
@@ -186,7 +295,20 @@ private Register register;
      */
     private void findProductByName()
     {
-        System.out.println("Find product by name");
+        System.out.print("Enter title of reading material: ");
+        Scanner sc = new Scanner(System.in);
+        String title = sc.nextLine();
+        
+        HashMap<String, ReadingMaterial> materialFound = 
+                this.register.findMaterial(title);
+        if(materialFound != null)
+        {
+            printReadingMaterialInfo(materialFound);
+        }
+        else {
+            System.out.println( "Reading material not found! "
+                    + "Make sure you spell the title correctly." );
+        }
         
     }
     
@@ -202,5 +324,22 @@ private Register register;
         this.register.addToCollection(rm3);
         this.register.addToCollection(rm4);
     }
+    
+    private void printReadingMaterialInfo(HashMap materialFound)
+    {
+        Iterator<ReadingMaterial> it = materialFound.values().iterator();
+        
+        while(it.hasNext())
+        {
+            ReadingMaterial rm = it.next();
+            System.out.println("Reading stuff found");
+            System.out.println(rm.getTitle());
+            System.out.println(rm.getPublisher());
+            System.out.println("****");
+            
+        }
+    }
+    
+    
 
 }
